@@ -1,4 +1,4 @@
-# Liferay DXP with External React Applications
+# Liferay with External React Applications
 
 This is a PoC that demonstrates one approach to embed external react applications inside Liferay, without an iframe.
 
