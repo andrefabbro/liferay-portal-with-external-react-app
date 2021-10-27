@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+
+  database:
+    image: mysql:8.0.25
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=lportal
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE --lower-case-table-names=0
+    volumes:
+       - ./mysql-dump:/docker-entrypoint-initdb.d
+
+  liferay:
+    image: liferay/portal:7.3.7-ga8
+    environment:
+      - LIFERAY_JVM_OPTS=-Xms2g -Xmx3g
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_DRIVER_UPPERCASEC_LASS_UPPERCASEN_AME=com.mysql.cj.jdbc.Driver
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_URL=jdbc:mysql://database/lportal?characterEncoding=utf8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&serverTimezone=GMT&useFastDateParsing=false&useUnicode=true
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME=root
+      - LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_PASSWORD=root
+      - LIFERAY_MODULE_PERIOD_FRAMEWORK_PERIOD_PROPERTIES_PERIOD_OSGI_PERIOD_CONSOLE=0.0.0.0:11311
+      - LIFERAY_RETRY_PERIOD_JDBC_PERIOD_ON_PERIOD_STARTUP_PERIOD_DELAY=20
+      - LIFERAY_RETRY_PERIOD_JDBC_PERIOD_ON_PERIOD_STARTUP_PERIOD_MAX_PERIOD_RETRIES=5
+      - LIFERAY_DL_PERIOD_STORE_PERIOD_IMPL=com.liferay.portal.store.file.system.AdvancedFileSystemStore
+      - LIFERAY_REDIRECT_PERIOD_URL_PERIOD_SECURITY_PERIOD_MODE=domain
+    volumes:
+      - ./liferay-files:/mnt/liferay/files
+      - ./liferay-document-library:/opt/liferay/data/document_library
+    depends_on:
+      - database
+      - search
+
+  search:
+    image: pocdxp/elasticsearch
+    build: ./elasticsearch/
+    environment:
+      - cluster.name=LiferayElasticsearchCluster
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
+      - "node.name=es-node1"
+
+  nginx:
+    image: pocdxp/nginx
+    build: ./nginx/
+    ports:
+      - "80:80"
+    depends_on:
+      - liferay
+      - react-weather-app
+      - react-simple-example
+
+  react-weather-app:
+    image: pocdxp/react-weather-app
+    build:
+      context: ./react-weather-app/
+      args:
+        - REACT_APP_OPEN_CAGE_API_KEY=7cfde33517ca4a6cb8b5e32bb863b406
+        - REACT_APP_OPEN_WEATHER_API_KEY=b882bf0649cc314b4cb90840ecf5b394
+
+  react-simple-example:
+    image: pocdxp/react-simple-example
+    build: ./react-simple-example/

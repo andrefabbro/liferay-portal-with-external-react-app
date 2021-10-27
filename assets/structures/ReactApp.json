@@ -1,0 +1,99 @@
+{
+    "availableLanguageIds": [
+        "en_US"
+    ],
+    "defaultLanguageId": "en_US",
+    "fields": [{
+            "label": {
+                "en_US": "Main Div Name"
+            },
+            "predefinedValue": {
+                "en_US": ""
+            },
+            "style": {
+                "en_US": ""
+            },
+            "tip": {
+                "en_US": ""
+            },
+            "dataType": "string",
+            "indexType": "",
+            "localizable": false,
+            "name": "mainDivName",
+            "readOnly": false,
+            "repeatable": false,
+            "required": false,
+            "showLabel": true,
+            "type": "text"
+        },
+        {
+            "label": {
+                "en_US": "Chunk CSS Address"
+            },
+            "predefinedValue": {
+                "en_US": ""
+            },
+            "style": {
+                "en_US": ""
+            },
+            "tip": {
+                "en_US": ""
+            },
+            "dataType": "string",
+            "indexType": "",
+            "localizable": false,
+            "name": "chunkCss",
+            "readOnly": false,
+            "repeatable": false,
+            "required": false,
+            "showLabel": true,
+            "type": "text"
+        },
+        {
+            "label": {
+                "en_US": "Javascript Inline"
+            },
+            "predefinedValue": {
+                "en_US": ""
+            },
+            "style": {
+                "en_US": ""
+            },
+            "tip": {
+                "en_US": ""
+            },
+            "dataType": "string",
+            "indexType": "",
+            "localizable": false,
+            "name": "JavascriptInline",
+            "readOnly": false,
+            "repeatable": false,
+            "required": false,
+            "showLabel": true,
+            "type": "textarea"
+        },
+        {
+            "label": {
+                "en_US": "Chunk JS Address"
+            },
+            "predefinedValue": {
+                "en_US": ""
+            },
+            "style": {
+                "en_US": ""
+            },
+            "tip": {
+                "en_US": ""
+            },
+            "dataType": "string",
+            "indexType": "",
+            "localizable": false,
+            "name": "chunkJs",
+            "readOnly": false,
+            "repeatable": true,
+            "required": false,
+            "showLabel": true,
+            "type": "text"
+        }
+    ]
+}
